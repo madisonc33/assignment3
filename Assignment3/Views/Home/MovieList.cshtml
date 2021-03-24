@@ -5,41 +5,59 @@
     ViewBag.Title = "The Joel Hilton Film Collection List";
 }
 
-@model IEnumerable<Assignment3.Models.AddMovie>
+@model IEnumerable<AddMovie>
 
 <div>
     <h1>@ViewBag.Title</h1><br /><br />
 
     <!--creates table to display items found in a list-->
-    <table>
-        <tr>
-            <th>Category</th>
-            <th>Title</th>
-            <th>Year</th>
-            <th>Director</th>
-            <th>Rating</th>
-            <th>Edited</th>
-            <th>Lent To</th>
-            <th>Notes</th>
-        </tr>
-        <!--goes through each item in a list and builds a row for it-->
-        @foreach (Assignment3.Models.AddMovie m in Model)
-        {
-            <!--checks if the title is independence day, if it is, it won't print it-->
-            @if (m.Title != "Independence Day")
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Category</th>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Director</th>
+                <th>Rating</th>
+                <th>Edited</th>
+                <th>Lent To</th>
+                <th>Notes</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--goes through each item in a list and builds a row for it-->
+            @foreach (var m in Model)
             {
-                <tr>
-                    <td>@m.Category</td>
-                    <td>@m.Title</td>
-                    <td>@m.Year</td>
-                    <td>@m.Director</td>
-                    <td>@m.Rating</td>
-                    <td>@m.Edited</td>
-                    <td>@m.LentTo</td>
-                    <td>@m.Notes</td>
-                </tr>
+                <!--checks if the title is independence day, if it is, it won't print it-->
+                @if (m.Title != "Independence Day")
+                {
+                    <tr>
+                        <td>@m.Category</td>
+                        <td>@m.Title</td>
+                        <td>@m.Year</td>
+                        <td>@m.Director</td>
+                        <td>@m.Rating</td>
+                        <td>@m.Edited</td>
+                        <td>@m.LentTo</td>
+                        <td>@m.Notes</td>
+                        <td>
+                            <form method="post" asp-action="DeleteMovie">
+                                <input type="hidden" id="@m.MovieID" name="movieid" value="@m.MovieID" />
+                                <button class="btn btn-dark" type="submit">Delete</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="get" asp-action="EditMovie">
+                                <input type="hidden" id="@m.MovieID" name="movieid" value="@m.MovieID" />
+                                <button class="btn btn-dark" type="submit">Edit</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
             }
-        }
+        </tbody>
     </table>
 
 </div> 

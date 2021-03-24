@@ -11,6 +11,11 @@ namespace Assignment3.Models
 {
     public class AddMovie
     {
+        //model that is used to build the database
+        [Key]
+        [Required]
+        public int MovieID { get; set; }
+
         [Required]
         public string Category { get; set; }
 
